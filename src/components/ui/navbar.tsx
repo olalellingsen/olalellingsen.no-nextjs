@@ -22,14 +22,14 @@ function Navbar() {
         <div className="hover:cursor-pointer">
           <h1 className={`hidden sm:flex`}>Ola Lømo Ellingsen</h1>
           <h2 className="sm:hidden">Ola Lømo Ellingsen</h2>
-          <h3>Trumpet player | Composer</h3>
+          <h4 className="text-sm">Trumpet player | Composer</h4>
         </div>
       </Link>
       <Menu
         size="48"
         strokeWidth={0.5}
         onClick={() => setIsOpen(true)}
-        className="absolute cursor-pointer right-1 top-3 md:m-3 lg:hidden"
+        className="absolute cursor-pointer right-1 top-4 md:m-3 lg:hidden"
       />
 
       {isOpen && (
@@ -38,7 +38,7 @@ function Navbar() {
             size="48"
             strokeWidth={0.5}
             onClick={() => setIsOpen(false)}
-            className="absolute cursor-pointer right-1 top-3 md:m-3"
+            className="absolute cursor-pointer right-1 top-4 md:m-3"
           />
           <ul className="p-10 grid gap-y-4">
             {menuItems.map((item) => (

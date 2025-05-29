@@ -1,29 +1,49 @@
 "use client";
-import React, { useState } from "react";
 
-function Concerts() {
-  const [mjau, setMjau] = useState(false);
+import { Card, CardAction, CardContent, CardTitle } from "@/components/ui/card";
+import { fetchCollection } from "@/lib/fetchData";
+import React, { Suspense, useEffect, useState } from "react";
+
+export default function Concerts() {
+  const [concertData, setConcertData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const concertData = await fetchCollection("Concerts");
+
+      if (!concertData || concertData.length === 0) {
+        console.error("No data found");
+
+        return;
+      }
+      setConcertData(concertData);
+    };
+    loadData();
+  }, []);
 
   return (
-    <main className="mainContent">
-      <h1 className="text-blue-800 my-8">Ingrids side</h1>
-      <h3 className="text-center border border-orange-500 rounded-4xl">
-        {mjau &&
-          "Mjau mjau mjau mjau mjau mjau mjau mjau mjau mjau mjau mjau mjau mjau"}
-        {!mjau &&
-          "Umjau umjau umjau umjau umjau umjau umjau umjau umjau umjau umjau"}
-      </h3>
-      <br />
-      <img
-        className="w-full sm:w-1/2 lg:w-1/4 cursor-pointer rounded-full aspect-square object-cover shadow-md hover:shadow-2xl hover:rotate-360 transition-all duration-500"
-        onClick={() => setMjau(!mjau)}
-        src={
-          "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ2smvooDjWLFwiSdtPd29-CFnWgG2ea1uYZH2GspFxPFg5LX3j9OM_g1QnnTLVVXHeUHjf9FMFhR_rOGfx9NAE2Q"
-        }
-        alt="Ingrid"
-      />
-    </main>
+    <div>
+      <h1>Upcoming concerts</h1>
+
+      <ul className="space-y-4">
+        {concertData
+          .filter((concert) => concert.date.toDate() >= new Date())
+          .sort((a, b) => a.date - b.date)
+          .map((concert) => (
+            <li key={concert.id}>
+              <Card>
+                <CardTitle>{concert.band}</CardTitle>
+                <CardContent>
+                  <p>{concert.date.toDate().toLocaleDateString()}</p>
+                  <p>{concert.venue}</p>
+                  <p>{concert.time}</p>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+      </ul>
+
+      {concertData.length === 0 && <p>Loading concerts...</p>}
+    </div>
   );
 }
-
-export default Concerts;
