@@ -45,6 +45,9 @@ export default function AdminPage() {
         <Link href="/admin/discography">
           <Button variant={"outline"}>Edit discography</Button>
         </Link>
+        <Link href="/admin/projects">
+          <Button variant={"outline"}>Edit projects</Button>
+        </Link>
         <Link href="/admin/bio">
           <Button variant={"outline"}>Edit bio</Button>
         </Link>

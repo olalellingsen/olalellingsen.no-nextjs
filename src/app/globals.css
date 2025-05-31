@@ -125,9 +125,8 @@
   @apply pt-20 pb-10 px-2 lg:px-24 xl:px-40 2xl:px-80;
 }
 
-input,
-textarea {
-  @apply w-full p-2 rounded-md;
+form {
+  @apply flex flex-col gap-4 p-2;
 }
 
 h1 {

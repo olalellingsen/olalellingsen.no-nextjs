@@ -8,7 +8,6 @@ import { Album, Single } from "@/types/Discography";
 import React, { useEffect, useState } from "react";
 import SpotifyPlayer from "./spotifyPlayer";
 import { Button } from "./ui/button";
-import { Card, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
 import {
   AlertDialog,
@@ -40,8 +39,10 @@ export default function EditDiscography() {
         singleData
           .map((item: any) => ({
             id: item.id,
+            title: item.title ?? "",
             releaseYear: item.releaseYear ?? "",
             spotify: item.spotify ?? "",
+            artist: item.artist ?? "",
           }))
           .sort((a, b) => b.releaseYear - a.releaseYear)
       );
@@ -50,7 +51,9 @@ export default function EditDiscography() {
           .map((item: any) => ({
             id: item.id,
             releaseYear: item.releaseYear ?? "",
+            title: item.title ?? "",
             spotify: item.spotify ?? "",
+            artist: item.artist ?? "",
           }))
           .sort((a, b) => b.releaseYear - a.releaseYear)
       );
@@ -68,6 +71,8 @@ export default function EditDiscography() {
       await updateDocument("Singles", selectedSingle.id, {
         releaseYear: selectedSingle.releaseYear,
         spotify: selectedSingle.spotify,
+        title: selectedSingle.title,
+        artist: selectedSingle.artist,
       });
       setMessage("Single updated successfully.");
       setSelectedSingle(null);
@@ -88,6 +93,8 @@ export default function EditDiscography() {
       await updateDocument("Albums", selectedAlbum.id, {
         releaseYear: selectedAlbum.releaseYear,
         spotify: selectedAlbum.spotify,
+        title: selectedAlbum.title,
+        artist: selectedAlbum.artist,
       });
       setMessage("Album updated successfully.");
       setSelectedAlbum(null);
@@ -123,8 +130,11 @@ export default function EditDiscography() {
 
   return (
     <div>
-      <div className="text-center py-4">
-        <Button onClick={() => setShowSingles(!showSingles)}>
+      <div className="py-2">
+        <Button
+          variant={"outline"}
+          onClick={() => setShowSingles(!showSingles)}
+        >
           {showSingles ? "Show Albums" : "Show Singles"}
         </Button>
         {message && <p className="mt-2 text-green-600">{message}</p>}
@@ -132,82 +142,117 @@ export default function EditDiscography() {
 
       {selectedSingle && (
         <form onSubmit={handleSubmitSingle}>
-          <Card className="p-4 space-y-2">
-            <CardTitle>Edit Single</CardTitle>
+          <h3>Edit single: {selectedSingle.title}</h3>
 
-            <Input
-              value={selectedSingle.releaseYear}
-              onChange={(e) =>
-                setSelectedSingle({
-                  ...selectedSingle,
-                  releaseYear: parseInt(e.target.value, 10),
-                })
-              }
-              type="number"
-              placeholder="Release Year"
-            />
+          <Input
+            value={selectedSingle.title || ""}
+            onChange={(e) =>
+              setSelectedSingle({
+                ...selectedSingle,
+                title: e.target.value,
+              })
+            }
+            placeholder="Title"
+          />
 
-            <Input
-              value={selectedSingle.spotify}
-              onChange={(e) =>
-                setSelectedSingle({
-                  ...selectedSingle,
-                  spotify: e.target.value,
-                })
-              }
-              placeholder="Spotify Link"
-            />
-            <div className="flex gap-2">
-              <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save"}
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => setSelectedSingle(null)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </Card>
+          <Input
+            value={selectedSingle.artist || ""}
+            onChange={(e) =>
+              setSelectedSingle({
+                ...selectedSingle,
+                artist: e.target.value,
+              })
+            }
+            placeholder="Artist"
+          />
+
+          <Input
+            value={selectedSingle.releaseYear || ""}
+            onChange={(e) =>
+              setSelectedSingle({
+                ...selectedSingle,
+                releaseYear: parseInt(e.target.value, 10),
+              })
+            }
+            type="number"
+            placeholder="Release Year"
+          />
+
+          <Input
+            value={selectedSingle.spotify || ""}
+            onChange={(e) =>
+              setSelectedSingle({
+                ...selectedSingle,
+                spotify: e.target.value,
+              })
+            }
+            placeholder="Spotify Link"
+          />
+          <div className="flex gap-2">
+            <Button type="submit" disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setSelectedSingle(null)}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 
       {selectedAlbum && (
         <form onSubmit={handleSubmitAlbum}>
-          <Card className="p-4 space-y-2">
-            <CardTitle>Edit Album</CardTitle>
-            <Input
-              value={selectedAlbum.releaseYear}
-              onChange={(e) =>
-                setSelectedAlbum({
-                  ...selectedAlbum,
-                  releaseYear: parseInt(e.target.value, 10),
-                })
-              }
-              placeholder="Release Year"
-              type="number"
-            />
-            <Input
-              value={selectedAlbum.spotify}
-              onChange={(e) =>
-                setSelectedAlbum({ ...selectedAlbum, spotify: e.target.value })
-              }
-              placeholder="Spotify Link"
-            />
-            <div className="flex gap-2">
-              <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save"}
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => setSelectedAlbum(null)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </Card>
+          <h3>Edit album: {selectedAlbum.title}</h3>
+
+          <Input
+            value={selectedAlbum.title || ""}
+            onChange={(e) =>
+              setSelectedAlbum({ ...selectedAlbum, title: e.target.value })
+            }
+            placeholder="Title"
+          />
+
+          <Input
+            value={selectedAlbum.artist || ""}
+            onChange={(e) =>
+              setSelectedAlbum({ ...selectedAlbum, artist: e.target.value })
+            }
+            placeholder="Artist"
+          />
+
+          <Input
+            value={selectedAlbum.releaseYear || ""}
+            onChange={(e) =>
+              setSelectedAlbum({
+                ...selectedAlbum,
+                releaseYear: parseInt(e.target.value, 10),
+              })
+            }
+            placeholder="Release Year"
+            type="number"
+          />
+          <Input
+            value={selectedAlbum.spotify || ""}
+            onChange={(e) =>
+              setSelectedAlbum({ ...selectedAlbum, spotify: e.target.value })
+            }
+            placeholder="Spotify Link"
+          />
+          <div className="flex gap-2">
+            <Button type="submit" disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setSelectedAlbum(null)}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       )}
 

@@ -56,99 +56,95 @@ export default function EditConcerts() {
     <div>
       {selectedConcert && (
         <form className="py-2">
-          <Card className="bg-gray-100">
-            <CardTitle>Edit Concert</CardTitle>
+          <Input
+            type="text"
+            placeholder="Title"
+            value={selectedConcert.band || ""}
+            onChange={(e) =>
+              setSelectedConcert({
+                ...selectedConcert,
+                band: e.target.value,
+              })
+            }
+          />
+          <DatePicker
+            date={selectedConcert.date?.toDate?.() || selectedConcert.date}
+            onChange={(newDate) => {
+              if (!newDate) return;
+              setSelectedConcert({ ...selectedConcert, date: newDate });
+            }}
+          />
 
-            <Input
-              type="text"
-              placeholder="Title"
-              value={selectedConcert.band || ""}
-              onChange={(e) =>
-                setSelectedConcert({
-                  ...selectedConcert,
-                  band: e.target.value,
-                })
-              }
-            />
-            <DatePicker
-              date={selectedConcert.date?.toDate?.() || selectedConcert.date}
-              onChange={(newDate) => {
-                if (!newDate) return;
-                setSelectedConcert({ ...selectedConcert, date: newDate });
-              }}
-            />
+          <Input
+            type="text"
+            placeholder="Time"
+            value={selectedConcert.time || ""}
+            onChange={(e) =>
+              setSelectedConcert({
+                ...selectedConcert,
+                time: e.target.value,
+              })
+            }
+          />
+          <Input
+            type="text"
+            placeholder="Venue"
+            value={selectedConcert.venue || ""}
+            onChange={(e) =>
+              setSelectedConcert({
+                ...selectedConcert,
+                venue: e.target.value,
+              })
+            }
+          />
+          <Input
+            type="text"
+            placeholder="Venue Link"
+            value={selectedConcert.venueLink || ""}
+            onChange={(e) =>
+              setSelectedConcert({
+                ...selectedConcert,
+                venueLink: e.target.value,
+              })
+            }
+          />
+          <Input
+            type="text"
+            placeholder="Ticket Link"
+            value={selectedConcert.ticketLink || ""}
+            onChange={(e) =>
+              setSelectedConcert({
+                ...selectedConcert,
+                ticketLink: e.target.value,
+              })
+            }
+          />
 
-            <Input
-              type="text"
-              placeholder="Time"
-              value={selectedConcert.time || ""}
-              onChange={(e) =>
-                setSelectedConcert({
-                  ...selectedConcert,
-                  time: e.target.value,
-                })
-              }
-            />
-            <Input
-              type="text"
-              placeholder="Venue"
-              value={selectedConcert.venue || ""}
-              onChange={(e) =>
-                setSelectedConcert({
-                  ...selectedConcert,
-                  venue: e.target.value,
-                })
-              }
-            />
-            <Input
-              type="text"
-              placeholder="Venue Link"
-              value={selectedConcert.venueLink || ""}
-              onChange={(e) =>
-                setSelectedConcert({
-                  ...selectedConcert,
-                  venueLink: e.target.value,
-                })
-              }
-            />
-            <Input
-              type="text"
-              placeholder="Ticket Link"
-              value={selectedConcert.ticketLink || ""}
-              onChange={(e) =>
-                setSelectedConcert({
-                  ...selectedConcert,
-                  ticketLink: e.target.value,
-                })
-              }
-            />
-
-            <Button
-              onClick={async () => {
-                await writeDocument(
-                  "Concerts",
-                  {
-                    band: selectedConcert.band,
-                    date: selectedConcert.date,
-                    time: selectedConcert.time,
-                    venue: selectedConcert.venue,
-                    venueLink: selectedConcert.venueLink,
-                    ticketLink: selectedConcert.ticketLink,
-                  },
-                  selectedConcert.id
-                ); // Use the concert ID to update the existing document
-                setSelectedConcert(null);
-                // Reload updated data
-                const updated = await fetchCollection("Concerts");
-                setConcertData(updated);
-              }}
-            >
-              Save
-            </Button>
-            <Button variant="outline" onClick={() => setSelectedConcert(null)}>
-              Cancel
-            </Button>
-          </Card>
+          <Button
+            onClick={async () => {
+              await writeDocument(
+                "Concerts",
+                {
+                  band: selectedConcert.band,
+                  date: selectedConcert.date,
+                  time: selectedConcert.time,
+                  venue: selectedConcert.venue,
+                  venueLink: selectedConcert.venueLink,
+                  ticketLink: selectedConcert.ticketLink,
+                },
+                selectedConcert.id
+              ); // Use the concert ID to update the existing document
+              setSelectedConcert(null);
+              // Reload updated data
+              const updated = await fetchCollection("Concerts");
+              setConcertData(updated);
+            }}
+          >
+            Save
+          </Button>
+          <Button variant="outline" onClick={() => setSelectedConcert(null)}>
+            Cancel
+          </Button>
         </form>
       )}
 
