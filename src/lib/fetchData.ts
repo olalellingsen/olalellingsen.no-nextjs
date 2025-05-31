@@ -8,6 +8,7 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 export const fetchCollection = async (collectionName: string) => {
@@ -41,4 +42,13 @@ export async function deleteDocument(collection: string, id: string) {
   if (!id) throw new Error("Missing document ID");
   const ref = doc(db, collection, id);
   await deleteDoc(ref);
+}
+
+export async function updateDocument(
+  collection: string,
+  id: string,
+  data: any
+) {
+  const ref = doc(db, collection, id);
+  await updateDoc(ref, data);
 }

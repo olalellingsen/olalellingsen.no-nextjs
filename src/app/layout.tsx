@@ -8,7 +8,7 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@/components/ui/menubar";
-import Navbar from "@/components/ui/navbar";
+import Navbar from "@/components/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
-        <main className="px-2 sm:px-4 mt-4 sm:mt-8">{children}</main>
+        <main className="px-2 sm:px-4 mt-8 sm:mt-12 sm:w-2xl mx-auto">
+          {children}
+        </main>
         <footer></footer>
       </body>
     </html>

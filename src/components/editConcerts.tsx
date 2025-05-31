@@ -21,7 +21,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { AlertDialogHeader, AlertDialogFooter } from "./alert-dialog";
+import { AlertDialogHeader, AlertDialogFooter } from "./ui/alert-dialog";
 
 export default function EditConcerts() {
   const [concertData, setConcertData] = useState<any[]>([]);
@@ -62,7 +62,7 @@ export default function EditConcerts() {
             <Input
               type="text"
               placeholder="Title"
-              value={selectedConcert.band}
+              value={selectedConcert.band || ""}
               onChange={(e) =>
                 setSelectedConcert({
                   ...selectedConcert,
@@ -81,7 +81,7 @@ export default function EditConcerts() {
             <Input
               type="text"
               placeholder="Time"
-              value={selectedConcert.time}
+              value={selectedConcert.time || ""}
               onChange={(e) =>
                 setSelectedConcert({
                   ...selectedConcert,
@@ -92,7 +92,7 @@ export default function EditConcerts() {
             <Input
               type="text"
               placeholder="Venue"
-              value={selectedConcert.venue}
+              value={selectedConcert.venue || ""}
               onChange={(e) =>
                 setSelectedConcert({
                   ...selectedConcert,
@@ -103,7 +103,7 @@ export default function EditConcerts() {
             <Input
               type="text"
               placeholder="Venue Link"
-              value={selectedConcert.venueLink}
+              value={selectedConcert.venueLink || ""}
               onChange={(e) =>
                 setSelectedConcert({
                   ...selectedConcert,
@@ -114,11 +114,11 @@ export default function EditConcerts() {
             <Input
               type="text"
               placeholder="Ticket Link"
-              value={selectedConcert.ticketLink}
+              value={selectedConcert.ticketLink || ""}
               onChange={(e) =>
                 setSelectedConcert({
                   ...selectedConcert,
-                  venueLink: e.target.value,
+                  ticketLink: e.target.value,
                 })
               }
             />

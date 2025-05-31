@@ -3,16 +3,8 @@ import { useEffect, useState } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, provider } from "@/firebase";
 import { Button } from "@/components/ui/button";
+
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import AddConcert from "@/components/ui/addConcert";
-import EditConcerts from "@/components/ui/editConcerts";
-import AddAlbumSingle from "@/components/ui/addAlbumSingle";
 
 export default function AdminPage() {
   const [user, setUser] = useState(null as any);
@@ -46,39 +38,18 @@ export default function AdminPage() {
 
   return (
     <div>
-      <Accordion type="single" collapsible className="">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Add concert</AccordionTrigger>
-          <AccordionContent>
-            <AddConcert />
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Edit concerts</AccordionTrigger>
-          <AccordionContent>
-            <EditConcerts />
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Add album or single</AccordionTrigger>
-          <AccordionContent>
-            <AddAlbumSingle />
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="item-4">
-          <AccordionTrigger>Edit discography</AccordionTrigger>
-          <AccordionContent></AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-5">
-          <AccordionTrigger>Edit bio</AccordionTrigger>
-          <AccordionContent></AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      <br />
-      <div className="flex justify-center">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 **:w-50 sm:**:h-30">
+        <Link href="/admin/concerts">
+          <Button variant={"outline"}>Edit concerts</Button>
+        </Link>
+        <Link href="/admin/discography">
+          <Button variant={"outline"}>Edit discography</Button>
+        </Link>
+        <Link href="/admin/bio">
+          <Button variant={"outline"}>Edit bio</Button>
+        </Link>
+      </div>
+      <div className="flex justify-center items-center mt-4">
         <Button onClick={handleLogout} variant={"destructive"}>
           Sign out
         </Button>

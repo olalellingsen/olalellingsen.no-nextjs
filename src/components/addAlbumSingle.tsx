@@ -1,10 +1,11 @@
+"use client";
 import { writeDocument } from "@/lib/fetchData";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Single, Album } from "@/types/Discography";
-import { Label } from "@radix-ui/react-menubar";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 export default function AddAlbumSingle() {
@@ -13,16 +14,12 @@ export default function AddAlbumSingle() {
   const [newSingle, setNewSingle] = useState<
     Omit<Single, "id"> & { releaseYear: number }
   >({
-    title: "",
-    artist: "",
     releaseYear: new Date().getFullYear(),
     spotify: "",
   });
   const [newAlbum, setNewAlbum] = useState<
     Omit<Album, "id"> & { releaseYear: number }
   >({
-    title: "",
-    artist: "",
     releaseYear: new Date().getFullYear(),
     spotify: "",
   });
@@ -75,19 +72,16 @@ export default function AddAlbumSingle() {
         setLoading(false);
       }
     }
+    handleReset();
   };
 
   const handleReset = () => {
     setNewSingle({
-      title: "",
-      artist: "",
       releaseYear: new Date().getFullYear(),
       spotify: "",
     });
 
     setNewAlbum({
-      title: "",
-      artist: "",
       releaseYear: new Date().getFullYear(),
       spotify: "",
     });
@@ -103,25 +97,6 @@ export default function AddAlbumSingle() {
             <Switch onClick={() => setIsSingle(!isSingle)} />
             <Label>Add single</Label>
           </div>
-
-          <Input
-            placeholder={isSingle ? "Single Title" : "Album Title"}
-            value={isSingle ? newSingle.title : newAlbum.title}
-            onChange={(e) =>
-              isSingle
-                ? setNewSingle({ ...newSingle, title: e.target.value })
-                : setNewAlbum({ ...newAlbum, title: e.target.value })
-            }
-          />
-          <Input
-            placeholder="Artist"
-            value={isSingle ? newSingle.artist : newAlbum.artist}
-            onChange={(e) =>
-              isSingle
-                ? setNewSingle({ ...newSingle, artist: e.target.value })
-                : setNewAlbum({ ...newAlbum, artist: e.target.value })
-            }
-          />
 
           <Input
             type="number"
