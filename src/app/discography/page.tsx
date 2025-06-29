@@ -1,7 +1,7 @@
 import React from "react";
 
 function Discography() {
-  return <main className="mainContent"></main>;
+  return <section></section>;
 }
 
 export default Discography;

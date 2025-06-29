@@ -7,6 +7,7 @@ import { Textarea } from "./ui/textarea";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/firebase";
+import ImageInput from "./ui/imageInput";
 
 export default function AddProject() {
   const [newProject, setNewProject] = useState<Omit<Project, "id">>({
@@ -101,16 +102,7 @@ export default function AddProject() {
           }
         />
 
-        <input
-          type="file"
-          accept="image/*"
-          className="border border-dashed border-gray-300 rounded-md p-2 w-full hover:cursor-pointer hover:bg-gray-50 file:font-medium file:cursor-pointer"
-          onChange={(e) => {
-            if (e.target.files && e.target.files[0]) {
-              setFile(e.target.files[0]);
-            }
-          }}
-        />
+        <ImageInput onChange={(file) => setFile(file)} />
 
         <Input
           type="text"

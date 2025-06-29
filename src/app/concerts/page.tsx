@@ -22,7 +22,7 @@ export default function Concerts() {
   }, []);
 
   return (
-    <div>
+    <section>
       <h1>Upcoming concerts</h1>
 
       <ul className="space-y-4">
@@ -44,6 +44,6 @@ export default function Concerts() {
       </ul>
 
       {concertData.length === 0 && <p>Loading concerts...</p>}
-    </div>
+    </section>
   );
 }
